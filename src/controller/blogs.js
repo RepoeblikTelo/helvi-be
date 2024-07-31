@@ -1,4 +1,4 @@
-const blogsModel = require('../models/blogs')
+const blogsModel = require('../models/blogs');
 
 const getBlogs = async (req, res) => {
     const {search} = req.query;
@@ -99,6 +99,7 @@ const createNew = async(req, res)=> {
     const image = file.filename;
     try {
         await blogsModel.createNew(body, image);
+        body.image = 'http://localhost:4000/assets/' + image;
         res.status(201).json({
             message: 'Success',
             data: body

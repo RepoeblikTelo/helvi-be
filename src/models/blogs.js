@@ -33,7 +33,10 @@ const getbyid = async(id) => {
                                 users
                                 ON
                                 comments.user_id = users.id
-                                WHERE 
+                                WHERE
+                                type =
+                                'BLOG'
+                                AND 
                                 blogs.id = ?
                                  `;
                                  const [rows] = await dbPool.execute(SQLQuery, [id]);

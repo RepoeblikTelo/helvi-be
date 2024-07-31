@@ -6,6 +6,12 @@ const express = require('express');
 
 const blogRoutes = require('./routes/blogs');
 
+const educationsRoutes = require('./routes/educations');
+
+const commentsRoutes = require('./routes/comments');
+
+const admin_posRoutes = require('./routes/admin_pos');
+
 const middlewareLogRequest = require('./middleware/logs');
 
 const upload = require('./middleware/multer');
@@ -24,6 +30,19 @@ app.post('/upload', upload.single('image'), (req,res) =>{
         message: 'Upload Berhasil'
     })
 })
+
+app.use('/api/educations', upload.single('image'), educationsRoutes);
+app.post('/upload', upload.single('image'), (req,res) =>{
+    res.json({
+        date: req.file,
+        message: 'Upload Berhasil'
+    })
+})
+
+app.use('/api/comments', upload.none(), commentsRoutes);
+
+app.use('/api/admin_pos', upload.none(), admin_posRoutes);
+
 
 
 app.listen(PORT, () => {

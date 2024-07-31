@@ -72,7 +72,8 @@ module.exports ={
     getallsearch,
     update,
     createNew,
-    getAll
+    getAll,
+    deleteid,
 
 
 }

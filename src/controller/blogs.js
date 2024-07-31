@@ -94,10 +94,45 @@ const update = async (req, res) => {
     }
 }
 
+const createNew = async(req, res)=> {
+    const {body, file}= req;
+    const image = file.filename;
+    try {
+        await blogsModel.createNew(body, image);
+        res.status(201).json({
+            message: 'Success',
+            data: body
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: error.message,
+            data:[]
+        });
+    }
+}
+const deleteid = async(req, res) => {
+    const {id} = req.params;
+    try {
+        await blogsModel.deleteid(id);
+        res.status(200).json({
+            message: 'Success',
+            data: null,
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: error.message,
+            data:[]
+        });
+    }
+}
+
 
 module.exports = {
     getbyid,
     update,
     getBlogs,
+    createNew,
+    deleteid,
+
     
 }

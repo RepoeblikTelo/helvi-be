@@ -3,14 +3,14 @@ const cuid = require('cuid');
 
 const createNew = (body) => {
     const id = cuid();
-    const SQLQuery = `INSERT INTO cleaning_services (id, user_id, description, address, customer_contact, cleaning_date, status, type)
+    const SQLQuery = `INSERT INTO cleaningservices (id, user_id, description, address, customer_contact, cleaning_date, status, type)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
                         return dbPool.execute(SQLQuery, [id, body.user_id, body.description, body.address, body.customer_contact, body.cleaning_date, body.status, body.type]);
 }
 
 const update = (body, id) => {
-    const SQLQuery = `UPDATE cleaning_services
+    const SQLQuery = `UPDATE cleaningservices
                         SET
                         status = ?
                         WHERE id = ?
@@ -19,58 +19,58 @@ const update = (body, id) => {
 }
 
 const deleteid = (id) => {
-    const SQLQuery = `DELETE FROM cleaning_services WHERE id = ?`;
+    const SQLQuery = `DELETE FROM cleaningservices WHERE id = ?`;
     return dbPool.execute(SQLQuery, [id]);
 }
 
 const getAll = () =>{
     const SQLQuery = `SELECT 
-                        cleaning_services.id AS csid,
-                        cleaning_services.user_id,
-                        cleaning_services.description,
-                        cleaning_services.address,
-                        cleaning_services.customer_contact,
-                        cleaning_services.cleaning_date,
-                        cleaning_services.status,
-                        cleaning_services.type,
-                        cleaning_services.created_at,
-                        cleaning_services.updated_at,
-                        users.id AS userid,
-                        users.name,
-                        users.email,
-                        users.photo_url
+                        cleaningservices.id AS csid,
+                        cleaningservices.user_id,
+                        cleaningservices.description,
+                        cleaningservices.address,
+                        cleaningservices.customer_contact,
+                        cleaningservices.cleaning_date,
+                        cleaningservices.status,
+                        cleaningservices.type,
+                        cleaningservices.created_at,
+                        cleaningservices.updated_at,
+                        user.id AS userid,
+                        user.name,
+                        user.email,
+                        user.photo_url
                         FROM 
-                        cleaning_services
+                        cleaningservices
                         LEFT JOIN
-                        users
+                        user
                         ON
-                        cleaning_services.id = users.id
+                        cleaningservices.id = user.id
                         `;
                         return dbPool.execute(SQLQuery)
 }
 
 const getallsearch = (search) => {
     const SQLQuery = `SELECT 
-                        cleaning_services.id AS csid,
-                        cleaning_services.user_id,
-                        cleaning_services.description,
-                        cleaning_services.address,
-                        cleaning_services.customer_contact,
-                        cleaning_services.cleaning_date,
-                        cleaning_services.status,
-                        cleaning_services.type,
-                        cleaning_services.created_at,
-                        cleaning_services.updated_at,
-                        users.id AS userid,
-                        users.name,
-                        users.email,
-                        users.photo_url
+                        cleaningservices.id AS csid,
+                        cleaningservices.user_id,
+                        cleaningservices.description,
+                        cleaningservices.address,
+                        cleaningservices.customer_contact,
+                        cleaningservices.cleaning_date,
+                        cleaningservices.status,
+                        cleaningservices.type,
+                        cleaningservices.created_at,
+                        cleaningservices.updated_at,
+                        user.id AS userid,
+                        user.name,
+                        user.email,
+                        user.photo_url
                         FROM 
-                        cleaning_services
+                        cleaningservices
                         LEFT JOIN
-                        users
+                        user
                         ON
-                        cleaning_services.id = users.id
+                        cleaningservices.id = user.id
                         WHERE
                         address
                         LIKE ?
@@ -82,28 +82,28 @@ const getallsearch = (search) => {
 
 const getbyid = (id) => {
     const SQLQuery = `SELECT
-                        cleaning_services.id AS csid,
-                        cleaning_services.user_id,
-                        cleaning_services.description,
-                        cleaning_services.address,
-                        cleaning_services.customer_contact,
-                        cleaning_services.cleaning_date,
-                        cleaning_services.status,
-                        cleaning_services.type,
-                        cleaning_services.created_at,
-                        cleaning_services.updated_at,
-                        users.id AS userid,
-                        users.name,
-                        users.email,
-                        users.photo_url
+                        cleaningservices.id AS csid,
+                        cleaningservices.user_id,
+                        cleaningservices.description,
+                        cleaningservices.address,
+                        cleaningservices.customer_contact,
+                        cleaningservices.cleaning_date,
+                        cleaningservices.status,
+                        cleaningservices.type,
+                        cleaningservices.created_at,
+                        cleaningservices.updated_at,
+                        user.id AS userid,
+                        user.name,
+                        user.email,
+                        user.photo_url
                         FROM 
-                        cleaning_services
+                        cleaningservices
                         LEFT JOIN
-                        users
+                        user
                         ON
-                        cleaning_services.id = users.id
+                        cleaningservices.id = user.id
                         WHERE 
-                        cleaning_services.id = ?
+                        cleaningservices.id = ?
                         `;
                         return dbPool.execute(SQLQuery, [id]);
 }

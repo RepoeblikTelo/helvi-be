@@ -3,20 +3,20 @@ const cuid = require('cuid');
 
 const createNew = (body, image)=> {
     const id = cuid();
-    const SQLQuery = `INSERT INTO waste_reports (id, user_id, description, image, location, point, coin, status)
+    const SQLQuery = `INSERT INTO wastereports (id, user_id, description, image, location, point, coin, status)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
                         return dbPool.execute(SQLQuery, [id, body.user_id, body.description, image, body.location, body.point, body.coin, body.status]);
 }
 
 const deleteid = (id) => {
-    const SQLQuery = `DELETE FROM waste_reports WHERE id = ?`;
+    const SQLQuery = `DELETE FROM wastereports WHERE id = ?`;
 
     return dbPool.execute(SQLQuery, [id]);
 }
 
 const update =  async(body, id) => {
-    const SQLQuery = `UPDATE waste_reports
+    const SQLQuery = `UPDATE wastereports
                         SET
                         status = ?
                         WHERE
@@ -24,7 +24,7 @@ const update =  async(body, id) => {
                         `;
             await dbPool.execute(SQLQuery, [body.status, id]);
 
-            const wastereportsQuery = `SELECT * FROM waste_reports WHERE id = ?`;
+            const wastereportsQuery = `SELECT * FROM wastereports WHERE id = ?`;
             const [rows] = await dbPool.execute(wastereportsQuery, [id]);
 
             if(rows.length > 0 ){
@@ -33,7 +33,7 @@ const update =  async(body, id) => {
                 const coin=rows[0].coin;
 
                 if(body.status === "true" ){
-                    const userQuery = `UPDATE users
+                    const userQuery = `UPDATE user
                                         SET
                                         point = point + ?,
                                         coin = coin + ?
@@ -50,28 +50,28 @@ const update =  async(body, id) => {
 
 const getbyid = (id) =>{
     const SQLQuery = `SELECT
-                        waste_reports.id AS wsid,
-                        waste_reports.user_id,
-                        waste_reports.description,
-                        waste_reports.image,
-                        waste_reports.location,
-                        waste_reports.point,
-                        waste_reports.coin,
-                        waste_reports.status,
-                        waste_reports.created_at,
-                        waste_reports.updated_at,
-                        users.id AS userid,
-                        users.name,
-                        users.email,
-                        users.photo_url
+                        wastereports.id AS wsid,
+                        wastereports.user_id,
+                        wastereports.description,
+                        wastereports.image,
+                        wastereports.location,
+                        wastereports.point,
+                        wastereports.coin,
+                        wastereports.status,
+                        wastereports.created_at,
+                        wastereports.updated_at,
+                        user.id AS userid,
+                        user.name,
+                        user.email,
+                        user.photo_url
                         FROM
-                        waste_reports
+                        wastereports
                         LEFT JOIN
-                        users
+                        user
                         ON
-                        waste_reports.id = users.id
+                        wastereports.id = user.id
                         WHERE
-                        waste_reports.id = ?
+                        wastereports.id = ?
                         `;
                         return dbPool.execute(SQLQuery, [id]);
 
@@ -79,54 +79,54 @@ const getbyid = (id) =>{
 
 const getAll = () => {
     const SQLQuery = `SELECT
-                        waste_reports.id AS wsid,
-                        waste_reports.user_id,
-                        waste_reports.description,
-                        waste_reports.image,
-                        waste_reports.location,
-                        waste_reports.point,
-                        waste_reports.coin,
-                        waste_reports.status,
-                        waste_reports.created_at,
-                        waste_reports.updated_at,
-                        users.id AS userid,
-                        users.name,
-                        users.email,
-                        users.photo_url
+                        wastereports.id AS wsid,
+                        wastereports.user_id,
+                        wastereports.description,
+                        wastereports.image,
+                        wastereports.location,
+                        wastereports.point,
+                        wastereports.coin,
+                        wastereports.status,
+                        wastereports.created_at,
+                        wastereports.updated_at,
+                        user.id AS userid,
+                        user.name,
+                        user.email,
+                        user.photo_url
                         FROM
-                        waste_reports
+                        wastereports
                         LEFT JOIN
-                        users
+                        user
                         ON
-                        waste_reports.id = users.id
+                        wastereports.id = user.id
                         `;
                         return dbPool.execute(SQLQuery);
 }
 
 const getallsearch = (search) => {
     const SQLQuery = `SELECT
-                        waste_reports.id AS wsid,
-                        waste_reports.user_id,
-                        waste_reports.description,
-                        waste_reports.image,
-                        waste_reports.location,
-                        waste_reports.point,
-                        waste_reports.coin,
-                        waste_reports.status,
-                        waste_reports.created_at,
-                        waste_reports.updated_at,
-                        users.id AS userid,
-                        users.name,
-                        users.email,
-                        users.photo_url
+                        wastereports.id AS wsid,
+                        wastereports.user_id,
+                        wastereports.description,
+                        wastereports.image,
+                        wastereports.location,
+                        wastereports.point,
+                        wastereports.coin,
+                        wastereports.status,
+                        wastereports.created_at,
+                        wastereports.updated_at,
+                        user.id AS userid,
+                        user.name,
+                        user.email,
+                        user.photo_url
                         FROM
-                        waste_reports
+                        wastereports
                         LEFT JOIN
-                        users
+                        user
                         ON
-                        waste_reports.id = users.id
+                        wastereports.id = user.id
                         WHERE 
-                        waste_reports.location
+                        wastereports.location
                         LIKE ?
                         `;
     const searchParam = `%${search}%`;

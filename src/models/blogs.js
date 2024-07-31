@@ -19,10 +19,10 @@ const getbyid = async(id) => {
                         comments.user_id AS user_id, 
                         comments.blog_id AS blog_id, 
                         comments.content AS content,
-                        users.id AS userID, 
-                        users.name AS name,
-                        users.email AS email, 
-                        users.photo_url AS photo_url
+                        user.id AS userID, 
+                        user.name AS name,
+                        user.email AS email, 
+                        user.photo_url AS photo_url
                         FROM
                             blogs
                             LEFT JOIN 
@@ -30,9 +30,9 @@ const getbyid = async(id) => {
                                 ON
                                 blogs.id = comments.blog_id
                                 LEFT JOIN
-                                users
+                                user
                                 ON
-                                comments.user_id = users.id
+                                comments.user_id = user.id
                                 WHERE
                                 type =
                                 'BLOG'

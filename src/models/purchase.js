@@ -13,14 +13,14 @@ const getAllPurchase = () => {
                     u.updated_at as user_updated_at,
                     u.created_at as user_created_at,
                     u.photo_url
-                    FROM user_buys b LEFT JOIN products p ON p.id = b.product_id
-                    LEFT JOIN users u ON  b.user_id = u.id;`
+                    FROM userbuys b LEFT JOIN products p ON p.id = b.product_id
+                    LEFT JOIN user u ON  b.user_id = u.id;`
 
     return dbPool.execute(query);
 }
 
 const savePurchase = ({user_id, status, id, product_id}) => {
-    return dbPool.execute(`INSERT INTO user_buys (id, product_id, user_id, status) VALUES (?, ?, ?, ?);`,
+    return dbPool.execute(`INSERT INTO userbuys (id, product_id, user_id, status) VALUES (?, ?, ?, ?);`,
         [id, product_id, user_id, status]);
 }
 
